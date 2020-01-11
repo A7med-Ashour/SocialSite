@@ -1,0 +1,43 @@
+body {
+		
+	}
+	input {
+		display : block;
+		margin : 10px;
+		padding : 10px;
+		text-align : center;
+	}
+	.btn {
+		width:150px;
+		background : green;
+		border : none;
+		cursor : pointer;
+		border-radius: 10px;
+		font-size : 25px;
+		color : white;
+	}
+	
+	.inValid {
+		border-color : red;
+	}
+	
+	.valid {
+		border-color : green;
+	}
+	
+	input + p {
+		color : red;
+		opacity : 0;
+		font-weight : bold;
+	}
+	
+	input.inValid + p {
+		opacity : 1;
+	}
+	
+	input.valid + p {
+		opacity : 0;
+	}
+	
+	
+	
