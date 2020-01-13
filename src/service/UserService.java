@@ -68,19 +68,32 @@ public class UserService {
 
 	public static boolean isInsertedSuccessfully(User user) {
 		
-		return (UserDB.insert(user) > 0);
+		boolean isInserted = (UserDB.insert(user) > 0);
+		
+		if(isInserted) {
+			sendVerificationCode(user.getEmail());
+		}
+		
+		return isInserted;
 	}
 
 	public static boolean isCorrectVerification(String email,String code) {
 		
 		String realCode = UserDB.getVerificationCode(email); 
-		return (realCode != null && realCode.equals(code));
+		return (realCode != null && realCode.equalsIgnoreCase(code));
 	}
 
 	public static void sendVerificationCode(String email) {
 		
-		String content = "YOUR VERFIFICATION CODE IS " + UserDB.getVerificationCode(email);
-		MailUtil.sendMail("customerServices@gmail.com",email,"SocilSite Verification",MailUtil.BODYTYPE.TEXT_PLAIN,content);
+		String body = "Thanks to Join SocilaSite.Please Verify Your Account During 24 Hours Or it will be Deleted. Your Verfication Code is : " 
+							+ UserDB.getVerificationCode(email);
+		
+		try {
+			MailUtil.sendMail("custserv2021@gmail.com",email,"SocilSite Verification Code",MailUtil.BODYTYPE.TEXT,body);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
