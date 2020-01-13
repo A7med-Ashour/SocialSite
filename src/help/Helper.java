@@ -47,8 +47,8 @@ public class Helper {
 			Map<String, Boolean> validationResults, Container<Integer> successCount,  Container<Integer> failCount) {
 		
 		validateFieldsWithPatterns(obj,patterns,validationResults);
-		successCount.setValue(new Integer((int) validationResults.entrySet().stream().filter(e -> e.getValue()).count()));
-		failCount.setValue(new Integer(validationResults.size() - successCount.getValue().intValue()));
+		successCount.setValue((int) validationResults.entrySet().stream().filter(e -> e.getValue()).count());
+		failCount.setValue(validationResults.size() - successCount.getValue().intValue());
 		
 	}
 	
@@ -62,20 +62,15 @@ public class Helper {
 		validateFieldsWithPatterns(obj,patterns,successMessages,failMessages,resultMessages);
 		
 		
-		successCount.setValue(new Integer( (int) resultMessages.entrySet().stream()
+		successCount.setValue((int) resultMessages.entrySet().stream()
 												.filter(e -> successMessages.containsValue(e.getValue()))
-												.count()));
+												.count());
 		
-		failCount.setValue(new Integer(resultMessages.size() - successCount.getValue().intValue()));
+		failCount.setValue(resultMessages.size() - successCount.getValue().intValue());
 		
 	
 	}
 
-	
-	public static void sendMail(String email, String subject, String content) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	public static String generateRandomString(int length) {
 		

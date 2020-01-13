@@ -27,7 +27,6 @@ public class UserDB {
 	public static User findByEmail(String email) {
 		
 		User user = null;
-		//String query = "SELECT * FROM user WHERE email = '" + email + "'";
 		String query = "SELECT * FROM user WHERE email = '" + email + "'";
 		DBAccess access = DBUtil.getDBAccess(query, DBUtil.QueryType.SELECT);
 		ResultSet rs = access.getResultSet();
@@ -65,7 +64,7 @@ public class UserDB {
 		String verificationCode = Helper.generateRandomString(5);
 		
 		/* INSERT USER */
-		StringBuilder query = new StringBuilder("INSERT INTO user (email,password,salt,name,phone,isMale,dateOfBirth,joinedDate) values (");
+		StringBuilder query = new StringBuilder("INSERT INTO user (email,password,salt,name,phone,isMale,dateOfBirth,join_Date) values (");
 		
 		query.append("'"  + user.getEmail() + "'");
 		query.append(",'" + SecurityUtil.hashPassword(user.getPassword() + salt) + "'");
@@ -74,7 +73,7 @@ public class UserDB {
 		query.append(",'" + user.getPhone() + "'");
 		query.append(","  + user.isMale());
 		query.append(","  + user.getDOB());
-		query.append(",now());");
+		query.append(",current_date());");
 			
 		DBAccess access = DBUtil.getDBAccess(query.toString(), DBUtil.QueryType.MODIFY);
 		int ret = access.getCount();
@@ -82,7 +81,7 @@ public class UserDB {
 		
 		/* INSERT VERIFICATION CODE */
 		query.setLength(0); /* CLEAR STRING BUILDER */
-		query.append("INSERT INTO verification (userEmail,code,createdDate) VALUES ("); 
+		query.append("INSERT INTO verification (userEmail,code,created_date) VALUES ("); 
 		query.append("'" + user.getEmail() + "'");
 		query.append(",'" + verificationCode+ "'");
 		query.append(",now())");

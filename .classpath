@@ -13,5 +13,6 @@
 	<classpathentry kind="lib" path="WebContent/libs/jstl-1.2.jar"/>
 	<classpathentry kind="lib" path="WebContent/libs/mysql-connector-java-8.0.18.jar"/>
 	<classpathentry kind="lib" path="WebContent/libs/servlet-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/scorp/eclipse-workspace/SocialSite/WebContent/libs/javax.mail.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

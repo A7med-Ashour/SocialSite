@@ -6,6 +6,7 @@ import java.util.Map;
 import data.UserDB;
 import help.Container;
 import help.Helper;
+import help.MailUtil;
 import model.User;
 
 public class UserService {
@@ -79,7 +80,7 @@ public class UserService {
 	public static void sendVerificationCode(String email) {
 		
 		String content = "YOUR VERFIFICATION CODE IS " + UserDB.getVerificationCode(email);
-		Helper.sendMail(email,"SocilSite Verification",content);
+		MailUtil.sendMail("customerServices@gmail.com",email,"SocilSite Verification",MailUtil.BODYTYPE.TEXT_PLAIN,content);
 		
 	}
 	
