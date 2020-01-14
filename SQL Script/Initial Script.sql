@@ -34,6 +34,16 @@ CREATE TABLE verification (
     
 );
 
+CREATE TABLE resetPassword (
+	user_email   VARCHAR(50) NOT NULL UNIQUE,
+    token		 VARCHAR(70) NOT NULL UNIQUE,
+    expire_date  DATETIME NOT NULL,
+    
+    CONSTRAINT resetPassword_FK FOREIGN KEY (user_email) REFERENCES user (email) ON DELETE CASCADE
+);
+
+-- TESTING COMMANDS
 SELECT * FROM user;
 SELECT * FROM verification;
+SELECT * FROM resetPassword;
 
