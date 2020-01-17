@@ -24,7 +24,7 @@ public class UserController extends HttpServlet {
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 		doPost(request,response);
 	}
 
@@ -70,13 +70,16 @@ public class UserController extends HttpServlet {
 			user = UserService.getUser(email);
 			if(UserService.isVerified(user)) {
 				URL =  "/home.jsp";
+				HttpSession session = request.getSession();
+				/* THIS PART TO MAKE SESSION THREAD SAFE  IF USER USE MULTI TABS*/
+				final String sessionID = session.getId().intern();
+				synchronized(sessionID) {
+					session.setAttribute("user", user);
+				}
 			}else {
 				URL =  "/verify.jsp";
+				request.setAttribute("user",user);
 			}
-			request.setAttribute("user",user);
-			HttpSession session = request.getSession();
-			session.getId();
-			
 		}else {
 			request.setAttribute("errorMSG"," WRONG Email OR PASSWORD.");
 			request.setAttribute("user",user);

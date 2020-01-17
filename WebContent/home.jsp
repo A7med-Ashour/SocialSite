@@ -24,7 +24,6 @@
 			<p>Gender : Female</p>
 		</c:otherwise>
 	</c:choose>
-	<c:if test="${user.male}"></c:if>
 	<a href="profile.jsp">Go to Profile</a>
 	
 	
