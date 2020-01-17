@@ -3,6 +3,8 @@ package controller;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,12 +34,26 @@ public class UserController extends HttpServlet {
 		
 		String action = request.getParameter("action");
 		
-		if(action!= null && action.equals("login")) {
-			loginHandler(request,response);
-		}else if(action != null && action.equals("join")){
-			registerHandler(request,response);
-		}else if(action!= null && (action.equals("Verify") || action.equals("Resend"))) { // Contains More Than ONE Action
-			verifyHandler(request,response);
+		if (action != null && !action.trim().isEmpty()) {
+			switch(action) {
+				case "login" : 
+					loginHandler(request,response);
+					break;
+				case "join"  :
+					registerHandler(request,response);
+					break;
+				case "Verify" :
+				case "Resend":
+					verifyHandler(request,response);
+					break;
+				case "Reset" :
+				case "newPassword" :
+					resetPasswordHandler(request,response);
+					break;
+				default :
+					/* Do Nothing */
+					break;
+			}
 		}else {
 			getServletContext().getRequestDispatcher("/login.jsp").forward(request,response);
 		}
@@ -159,5 +175,51 @@ public class UserController extends HttpServlet {
 		getServletContext().getRequestDispatcher(URL).forward(request, response);
 		
 	}
+	
+	private void resetPasswordHandler(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		if(request.getParameter("action").equals("newPassword")) {
+			String token = request.getParameter("token"),
+					  password = request.getParameter("password"),
+					  repeat = request.getParameter("repeat"),
+					  message = "Could'nt Update Your Password",
+					  URL = "/createNewPassword.jsp";
+			
+			if(password == null || password.trim().isEmpty()) {
+				message = "Please Enter Required Fields.";
+			}else if( !password.equals(repeat)) {
+				message = "Password Doesn't Match";
+			}else if(!Pattern.matches(UserService.getValidationPatterns().get("password"), password)) {
+				message = "Password Must be Alphanumeric between 8 and 20 characters and may has @ or -";
+			} else if(UserService.updatePasswordByToken(token,password)) {
+				message = "Your Password Is Successfully Updated . You Can Now <a href='login.jsp'>Log In</a> . ";
+				URL = "/tempMessage.jsp";
+				request.setAttribute("title", "Rest Password Success");
+				
+			}
+			
+			request.setAttribute("errorMSG", message);
+			request.setAttribute("token", token);
+			request.setAttribute("password", password);
+			request.setAttribute("repeat", repeat);
+			getServletContext().getRequestDispatcher(URL).forward(request, response);
+			return;
+		}
+		// get email address from request
+		String email     = request.getParameter("email"),
+				  message  = "InValid Email Address.";
+		
+		/* Check If The Reset Mail Is Sent Successfully */
+		if ( UserService.sendResetPasswordEmail(email)) {
+			message = "Please Check Your Email For Reset Password Instruction.";
+		}
+		
+		request.setAttribute("errorMSG", message);
+		getServletContext().getRequestDispatcher("/resetPassword.jsp").forward(request, response);
+		
+		
+	}
+
+
 
 }

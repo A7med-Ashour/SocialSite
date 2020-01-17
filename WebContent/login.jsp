@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="windows-1256">
-<title>Login</title>
+<title>Login </title>
 </head>
 <body>
 	<form action="login" method="post">
@@ -18,5 +18,6 @@
 	</form>
 	<p>${errorMSG}</p>
 	<a href="register.jsp">create new account</a>
+	<a href="resetPassword.jsp">Forget Password</a>
 </body>
 </html>
