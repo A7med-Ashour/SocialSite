@@ -10,7 +10,7 @@
 </head>
 <body>
 	<h1>Reset Your Password :</h1>
-	<form action="reset" method="post">
+	<form action="rest" method="post">
 		<input type="email" name="email" placeholder="Enter Your Email Address" required="required"/>
 		<input type="submit" name="action" value="Reset"/>
 	</form>
