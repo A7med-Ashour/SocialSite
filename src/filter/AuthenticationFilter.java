@@ -35,6 +35,7 @@ public class AuthenticationFilter implements Filter {
 					if(c.getName().equals("userEmail")) {
 						isAllowed = true;
 						session.setAttribute("user", UserService.getUser(c.getValue()) );
+						break;
 					}
 				}
 			}

@@ -26,6 +26,6 @@
 	</c:choose>
 	<a href="profile.jsp">Go to Profile</a>
 	
-	
+	<a href="logout?action=logout">LogOut</a>
 </body>
 </html>
