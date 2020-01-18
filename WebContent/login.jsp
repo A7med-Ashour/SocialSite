@@ -8,6 +8,7 @@
 <title>Login </title>
 </head>
 <body>
+	
 	<form action="login" method="post">
 		<input type="hidden" name="action" value="login"/>
 		<input type="email" name="email" placeholder= "Email" value="${user.email}" required/>

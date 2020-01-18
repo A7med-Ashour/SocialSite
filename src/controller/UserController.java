@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -88,14 +89,24 @@ public class UserController extends HttpServlet {
 				URL =  "/home.jsp";
 				HttpSession session = request.getSession();
 				/* THIS PART TO MAKE SESSION THREAD SAFE  IF USER USE MULTI TABS*/
-				final String sessionID = session.getId().intern();
+				final String sessionID = session.getId().intern(); /* String Constants Pool Object */
 				synchronized(sessionID) {
 					session.setAttribute("user", user);
 				}
+				
+				/* IF USER WANTS TO REMEMBER HIM */
+				if(rememberMe != null && rememberMe.equalsIgnoreCase("on")) {
+					Cookie userEmailCookie = new Cookie("userEmail",user.getEmail());
+					userEmailCookie.setMaxAge(60*60*24*365); /* ADD COOKIE FOR ONE YEAR */
+					userEmailCookie.setPath("/");
+					response.addCookie(userEmailCookie);
+				}
+				
 			}else {
 				URL =  "/verify.jsp";
 				request.setAttribute("user",user);
 			}
+			
 		}else {
 			request.setAttribute("errorMSG"," WRONG Email OR PASSWORD.");
 			request.setAttribute("user",user);
@@ -128,18 +139,12 @@ public class UserController extends HttpServlet {
 		
 		if(UserService.hasValidInfo(user,validationMessages) && UserService.isInsertedSuccessfully(user)) {
 			URL = "/verify.jsp";
-			
 			user = UserService.getUser(user.getEmail());
-			
-			request.setAttribute("user", user); // remove it
-			/* Make session Thread Save */
-			//HttpSession session = request.getSession();
-			//session.setAttribute("user", user);
+			request.setAttribute("user", user);
 		}else {
 			request.setAttribute("user", user);
 			request.setAttribute("messages", validationMessages);
 		}
-		
 		
 		getServletContext().getRequestDispatcher(URL).forward(request, response);
 	
@@ -157,8 +162,12 @@ public class UserController extends HttpServlet {
 		if(action.equals("Verify")) {
 			if (UserService.isCorrectVerification(email,code)) {
 				UserService.makeUserVerified(email);
-				//ADD TO SESSION
-				request.setAttribute("user", user);
+				/* THIS PART TO MAKE SESSION THREAD SAFE  IF USER USE MULTI TABS*/
+				HttpSession session = request.getSession();
+				final String sessionID = session.getId().intern();
+				synchronized(sessionID) {
+					session.setAttribute("user", user);
+				}
 				URL = "/home.jsp";
 			}else {
 				request.setAttribute("errorMSG", "INVALID CODE");
@@ -170,7 +179,6 @@ public class UserController extends HttpServlet {
 			request.setAttribute("user", user);
 			request.setAttribute("errorMSG", "YOUR CODE HAS BEEN SENT TO YOUR EMAIL ADDRESS.");
 		}
-		
 		
 		getServletContext().getRequestDispatcher(URL).forward(request, response);
 		
@@ -205,7 +213,9 @@ public class UserController extends HttpServlet {
 			getServletContext().getRequestDispatcher(URL).forward(request, response);
 			return;
 		}
-		// get email address from request
+		
+		/* THIS PART TO HANDLE SEND REST PAGE */
+		
 		String email     = request.getParameter("email"),
 				  message  = "InValid Email Address.";
 		
