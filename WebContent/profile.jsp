@@ -24,6 +24,7 @@
 			<p>Gender : Female</p>
 		</c:otherwise>
 	</c:choose>
+	<a href="logout?action=logout">LogOut</a>
 	
 </body>
 </html>

@@ -11,6 +11,7 @@
   	<url-pattern>/register</url-pattern>
   	<url-pattern>/verify</url-pattern>
   	<url-pattern>/reset</url-pattern>
+  	<url-pattern>/logout</url-pattern>
   </servlet-mapping>
   
    <filter>

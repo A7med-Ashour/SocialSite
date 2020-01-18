@@ -51,6 +51,9 @@ public class UserController extends HttpServlet {
 				case "newPassword" :
 					resetPasswordHandler(request,response);
 					break;
+				case "logout":
+					logoutHandler(request,response);
+					break;
 				default :
 					/* Do Nothing */
 					break;
@@ -227,6 +230,30 @@ public class UserController extends HttpServlet {
 		request.setAttribute("errorMSG", message);
 		getServletContext().getRequestDispatcher("/resetPassword.jsp").forward(request, response);
 		
+		
+	}
+
+
+	private void logoutHandler(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		/* MAKE SESSION INVALID */
+		request.getSession().invalidate();
+		
+		/* DELETE USEREMAIL COOKIE IF EXISTS */
+		Cookie cookies [] = request.getCookies();
+		if(cookies != null) {
+			for(Cookie c : cookies) {
+				if(c.getName().equals("userEmail")) {
+					c.setMaxAge(0);
+					c.setPath("/");
+					response.addCookie(c);
+					break;
+				}
+			}
+		}
+		
+		/* RETURN TO LOGIN PAGE */
+		getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
 		
 	}
 
