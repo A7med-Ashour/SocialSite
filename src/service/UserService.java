@@ -2,6 +2,7 @@ package service;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -38,7 +39,10 @@ public class UserService {
 
 	public static User getUser(String Email) {
 		
-		return UserDB.findByEmail(Email);
+		User user =  UserDB.findByEmail(Email);
+		user.setFriends(UserDB.getFriendsByID(user.getID()));
+		
+		return user;
 	}
 
 	public static boolean hasValidInfo(User user,Map<String,String> validationMessages) {
@@ -165,6 +169,13 @@ public class UserService {
 		UserDB.deleteResetPasswordToken(token);
 		
 		return (UserDB.updatePassword(email,password) > 0);
+	}
+
+	public static void getSearchFriendsResult(int ID,String value,List<User> results, Map<Integer, String> states) {
+		
+		if(value == null || value.trim().isEmpty()) return;
+		
+		UserDB.getSearchResult(ID,value,results,states);
 	}
 
 	

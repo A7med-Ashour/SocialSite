@@ -91,6 +91,7 @@ public class UserController extends HttpServlet {
 			if(UserService.isVerified(user)) {
 				URL =  "/home.jsp";
 				HttpSession session = request.getSession();
+				session.setMaxInactiveInterval(-1);
 				/* THIS PART TO MAKE SESSION THREAD SAFE  IF USER USE MULTI TABS*/
 				final String sessionID = session.getId().intern(); /* String Constants Pool Object */
 				synchronized(sessionID) {
@@ -167,6 +168,7 @@ public class UserController extends HttpServlet {
 				UserService.makeUserVerified(email);
 				/* THIS PART TO MAKE SESSION THREAD SAFE  IF USER USE MULTI TABS*/
 				HttpSession session = request.getSession();
+				session.setMaxInactiveInterval(-1);
 				final String sessionID = session.getId().intern();
 				synchronized(sessionID) {
 					session.setAttribute("user", user);

@@ -34,6 +34,7 @@ public class AuthenticationFilter implements Filter {
 				for (Cookie c : cookies) {
 					if(c.getName().equals("userEmail")) {
 						isAllowed = true;
+						session.setMaxInactiveInterval(-1);
 						session.setAttribute("user", UserService.getUser(c.getValue()) );
 						break;
 					}
