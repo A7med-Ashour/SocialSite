@@ -7,6 +7,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="style/global.css">
 <title>My Friends</title>
 </head>
 <body>
@@ -29,8 +30,54 @@
 	</table>
 	<c:choose>
 		<c:when test="${fn:length(user.friends) == 0 }"><p>You Don't Have Any Friends Yet .</p></c:when>
-		<c:otherwise><p>You Have (${fn:length(user.friends)})</p></c:otherwise>
+		<c:otherwise><p>You Have (${fn:length(user.friends)}) Friends . </p></c:otherwise>
 	</c:choose>
 	<a href="searchFriend.jsp">Add New Friend</a>
+	
+	<div>
+		<h2>Requests That You Received</h2>
+		<table border="1">
+			<tr>
+			<th>Name : </th>
+			<th>Email :  </th>
+			<th></th>
+			</tr>
+			<c:forEach var="sender" items="${receivedRequests}">
+				<tr>
+					<td>Name : ${sender.name} </td>
+					<td>Email : ${sender.email} </td>
+					<td><a href="friendship?action=remove,id=${sender.ID}" ><button class="redBG">Refuse</button></a></td>
+				</tr>
+			</c:forEach>
+		</table>
+		<c:choose>
+		<c:when test="${fn:length(receivedRequests) == 0 }"><p>You Didn't Receive Any Request .</p></c:when>
+		<c:otherwise><p>You Have (${fn:length(receivedRequests)}) Requests .</p></c:otherwise>
+	</c:choose>
+	</div>
+	
+	
+	<div>
+		<h2>Requests That Still Pending</h2>
+		<table border="1">
+			<tr>
+			<th>Name : </th>
+			<th>Email :  </th>
+			<th></th>
+			</tr>
+			<c:forEach var="receiver" items="${sentRequests}">
+				<tr>
+					<td>Name : ${receiver.name}</td>
+					<td>Email : ${receiver.email}</td>
+					<td><a href="friendship?action=remove,id=${receiver.ID}" ><button class="redBG">UnRequest</button></a></td>
+				</tr>
+			</c:forEach>
+		</table>
+		<c:choose>
+		<c:when test="${fn:length(sentRequests) == 0 }"><p>You Didn't Have Any Pending Request .</p></c:when>
+		<c:otherwise><p>You Have (${fn:length(sentRequests)}) Pending Requests .</p></c:otherwise>
+	</c:choose>
+	</div>
+	
 </body>
 </html>

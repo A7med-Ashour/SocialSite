@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
-
 import data.UserDB;
 import help.Container;
 import help.Helper;
@@ -41,7 +40,6 @@ public class UserService {
 		
 		User user =  UserDB.findByEmail(Email);
 		user.setFriends(UserDB.getFriendsByID(user.getID()));
-		
 		return user;
 	}
 
@@ -179,7 +177,14 @@ public class UserService {
 	}
 
 	
+	public static void getRequestsThatRecieved(int ID , List<User> receivedRequests) {
+		UserDB.getRecievedRequests(ID,receivedRequests);
+	}
 
+	public static void getRequestsThatSent(int ID, List<User> sentRequests) {
+		
+		UserDB.getSentRequests(ID,sentRequests);
+	}
 	
 
 }

@@ -211,12 +211,10 @@ public class UserDB {
 	public static List<User> getFriendsByID(int ID){
 		
 		List<User> friends = new ArrayList<>();
-		/*
-		String query = "SELECT  ID , name ,email , phone FROM user JOIN friendRequest ON user.ID = senderID OR user.ID = receiverID"
-							+ "WHERE user.ID != " + ID + " AND (senderID = " + ID+" OR receiverID = "+ ID + ") AND state = 'Accepted'";
-		*/
-		String query = " SELECT  ID , name ,email , phone FROM user JOIN friendRequest ON user.ID = senderID OR user.ID = receiverID\r\n" + 
-				"							WHERE user.ID !=  2   AND (senderID = 2 OR receiverID = 2) AND state = 'Accepted'";
+		
+		
+		String query =  "SELECT  ID , name ,email , phone FROM user JOIN friendRequest ON (user.ID = senderID OR user.ID = receiverID)"
+								+ "WHERE user.ID != " +  ID + " AND (senderID = " + ID + " OR receiverID =" + ID + " ) AND state = 'ACCEPTED' ";
 		/*
 		String query = "SELECT  ID ,name, email , phone FROM user WHERE ID IN ("
 				+ "SELECT  senderID As ID FROM friendRequest       Where state = 'ACCEPTED' AND receiverID = " + ID
@@ -280,5 +278,60 @@ public class UserDB {
 			DBUtil.freeDBAccess(access);
 		}
 	}
+
+	public static void getRecievedRequests(int ID, List<User> results) {
+		
+		String query = "SELECT  ID , name , email FROM user JOIN friendRequest ON (senderID = user.ID) WHERE receiverID = "
+				+ ID + " AND state = 'PENDING' ";
+		
+		DBAccess access = DBUtil.getDBAccess(query, DBUtil.QueryType.SELECT);
+		ResultSet rs = access.getResultSet();
+		User user = null;
+		try {
+			if(rs != null) {
+					while(rs.next()) {
+						user = User.builder()
+								.ID(rs.getInt("ID"))
+								.email(rs.getString("email"))
+								.name(rs.getString("name"))
+								.password("**********")
+								.build();
+						results.add(user);
+					}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			DBUtil.freeDBAccess(access);
+		}
+	}
+
+	public static void getSentRequests(int ID, List<User> results) {
+		
+		String query = "SELECT  ID , name , email FROM user JOIN friendRequest ON (receiverID = user.ID) "
+				  + "WHERE senderID = " + ID + " AND state = 'PENDING' ";
+
+			DBAccess access = DBUtil.getDBAccess(query, DBUtil.QueryType.SELECT);
+			ResultSet rs = access.getResultSet();
+			User user = null;
+			try {
+				if(rs != null) {
+					while(rs.next()) {
+						user = User.builder()
+								.ID(rs.getInt("ID"))
+								.email(rs.getString("email"))
+								.name(rs.getString("name"))
+								.password("**********")
+								.build();
+						results.add(user);
+					}
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				DBUtil.freeDBAccess(access);
+			}
+					
+				}
 	
 }

@@ -10,7 +10,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import data.UserDB;
 import model.User;
 import service.UserService;
 
@@ -28,6 +30,9 @@ public class FriendshipController extends HttpServlet {
 		
 		if (action != null && !action.trim().isEmpty()) {
 			switch(action) {
+				case "show":
+					showHandler(userID,request,response);
+					break;
 				case "search" : 
 					searchHandler(userID,request,response);
 					break;
@@ -38,6 +43,27 @@ public class FriendshipController extends HttpServlet {
 		}else {
 			getServletContext().getRequestDispatcher(request.getHeader("referer").replaceAll(".*social", "")).forward(request,response);
 		}
+	}
+
+	private void showHandler(int userID, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		User user = null;
+		HttpSession session = request.getSession();
+		final String sessionID = session.getId().intern();
+		List<User> receivedRequests = new ArrayList<>();
+		List<User> sentRequests = new ArrayList<>();
+		
+		synchronized(sessionID){
+			 user = (User)session.getAttribute("user");
+		}
+		user.setFriends(UserDB.getFriendsByID(userID));
+		UserService.getRequestsThatRecieved(user.getID(), receivedRequests);
+		UserService.getRequestsThatSent(user.getID(),sentRequests);
+		synchronized(sessionID){
+			session.setAttribute("receivedRequests", receivedRequests);
+			session.setAttribute("sentRequests", sentRequests);
+		}
+		getServletContext().getRequestDispatcher("/friends.jsp").forward(request, response);
+		
 	}
 
 	private void searchHandler(int ID,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
