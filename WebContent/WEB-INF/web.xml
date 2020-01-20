@@ -5,6 +5,7 @@
   	<servlet-name>UserController</servlet-name>
   	<servlet-class>controller.UserController</servlet-class>
   </servlet>
+  
   <servlet-mapping>
   	<servlet-name>UserController</servlet-name>
   	<url-pattern>/login</url-pattern>
@@ -13,6 +14,18 @@
   	<url-pattern>/reset</url-pattern>
   	<url-pattern>/logout</url-pattern>
   </servlet-mapping>
+  
+  
+   <servlet>
+  	<servlet-name>FriendshipController</servlet-name>
+  	<servlet-class>controller.FriendshipController</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>FriendshipController</servlet-name>
+  	<url-pattern>/friendship</url-pattern>
+  </servlet-mapping>
+  
   
    <filter>
   	<filter-name>AuthenticationFilter</filter-name>
@@ -25,6 +38,8 @@
   	<url-pattern>/profile.jsp</url-pattern>
   	<url-pattern>/tempMessage.jsp</url-pattern>
   	<url-pattern>/verify.jsp</url-pattern>
+  	<url-pattern>/friends.jsp</url-pattern>
+  	<url-pattern>/searchFriend.jsp</url-pattern>
   	<dispatcher>REQUEST</dispatcher>
   	<dispatcher>FORWARD</dispatcher>
   </filter-mapping>
@@ -32,4 +47,8 @@
   <welcome-file-list>
     <welcome-file>home.jsp</welcome-file>
   </welcome-file-list>
+  
+  <session-config>
+  	<session-timeout>30</session-timeout>
+  </session-config>
 </web-app>
