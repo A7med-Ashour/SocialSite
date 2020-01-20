@@ -91,6 +91,7 @@ public class UserController extends HttpServlet {
 			if(UserService.isVerified(user)) {
 				URL =  "/home.jsp";
 				HttpSession session = request.getSession();
+				session.setMaxInactiveInterval(-1);
 				/* THIS PART TO MAKE SESSION THREAD SAFE  IF USER USE MULTI TABS*/
 				final String sessionID = session.getId().intern(); /* String Constants Pool Object */
 				synchronized(sessionID) {
@@ -143,14 +144,18 @@ public class UserController extends HttpServlet {
 		if(UserService.hasValidInfo(user,validationMessages) && UserService.isInsertedSuccessfully(user)) {
 			URL = "/verify.jsp";
 			user = UserService.getUser(user.getEmail());
-			request.setAttribute("user", user);
 		}else {
-			request.setAttribute("user", user);
 			request.setAttribute("messages", validationMessages);
+		}
+		HttpSession session = request.getSession();
+		session.setMaxInactiveInterval(-1);
+		/* THIS PART TO MAKE SESSION THREAD SAFE  IF USER USE MULTI TABS*/
+		final String sessionID = session.getId().intern();
+		synchronized(sessionID) {
+			session.setAttribute("user", user);
 		}
 		
 		getServletContext().getRequestDispatcher(URL).forward(request, response);
-	
 	}
 	
 	private void verifyHandler(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
@@ -167,6 +172,7 @@ public class UserController extends HttpServlet {
 				UserService.makeUserVerified(email);
 				/* THIS PART TO MAKE SESSION THREAD SAFE  IF USER USE MULTI TABS*/
 				HttpSession session = request.getSession();
+				session.setMaxInactiveInterval(-1);
 				final String sessionID = session.getId().intern();
 				synchronized(sessionID) {
 					session.setAttribute("user", user);
