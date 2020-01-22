@@ -55,13 +55,28 @@ CREATE TABLE friendRequest (
 
 CREATE TRIGGER friendRequest_createdDate_Trigger BEFORE INSERT ON friendRequest FOR EACH ROW SET NEW.created_date = CURRENT_DATE(); 
 
+CREATE TABLE post (
+	ID INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    content LONGTEXT NOT NULL,
+    created_date DATE NOT NULL,
+    ownerID INT UNSIGNED NOT NULL,
+    
+    CONSTRAINT post_PK PRIMARY KEY (ID),
+    CONSTRAINT post_user_FK FOREIGN KEY (ownerID) REFERENCES user (ID) ON DELETE CASCADE
+);
+
+CREATE TRIGGER post_createdDate_Trigger BEFORE INSERT ON post FOR EACH ROW SET NEW.created_date = CURRENT_DATE();
+
 -- TESTING COMMANDS
+drop table post;
 USE socialSite;
 SELECT * FROM user;
 SELECT * FROM verification;
 SELECT * FROM resetPassword;
 SELECT * FROM friendRequest;
+SELECT * FROM post;
 
+Insert Into post (ownerID,content) values (4,'Hello World ');
 update friendRequest set state = 'ACCEPTED' Where senderID = 4 AND receiverID = 8;
 delete from friendRequest where (senderID = 4 AND receiverID = 6) OR (senderID = 4 AND receiverID = 6);
 SELECT  ID , name , email FROM user JOIN friendRequest ON (senderID = user.ID) WHERE receiverID = 4 AND state = 'PENDING';

@@ -9,23 +9,18 @@
 </head>
 <body>
 	<p>Welcome ${user.name} to Home Page</p>
-	
-	<h1> your Information Are </h1>
-	<p>ID		 	: ${user.ID}       </p>
-	<p>Email 		: ${user.email}    </p>
-	<p>Name 		: ${user.name} 	   </p>
-	<p>phone    	: ${user.phone}    </p>
-	<p>DateOfBirth  : ${user.DOB} </p>
-	<c:choose>
-		<c:when test="${user.male}">
-			<p>Gender : Male</p>
-		</c:when>
-		<c:otherwise>
-			<p>Gender : Female</p>
-		</c:otherwise>
-	</c:choose>
 	<a href="profile.jsp">Go to Profile</a>
 	<a href="friendship?action=show">My Friends</a>
 	<a href="logout?action=logout">LogOut</a>
+	
+	<div class="newPost">
+		<form action="posts" method="post">
+			<input type="hidden" name="action" value="create"/>
+			<textarea name="content" rows="10" cols="50" placeholder ="Create New Post" >
+			</textarea>
+			<input type="submit" value="Publish"/>
+		</form>
+		<p class="errorMSG">${errorMSG}</p>
+	</div>
 </body>
 </html>
