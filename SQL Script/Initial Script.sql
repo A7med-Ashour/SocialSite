@@ -53,6 +53,8 @@ CREATE TABLE friendRequest (
     CONSTRAINT friendRequest_Receiver_FK FOREIGN KEY (receiverID) REFERENCES user (ID) ON DELETE CASCADE
 );
 
+CREATE TRIGGER friendRequest_createdDate_Trigger BEFORE INSERT ON friendRequest FOR EACH ROW SET NEW.created_date = CURRENT_DATE(); 
+
 -- TESTING COMMANDS
 USE socialSite;
 SELECT * FROM user;
@@ -83,8 +85,8 @@ INSERT INTO friendRequest VALUES (7,8,default,CURRENT_DATE());
 INSERT INTO friendRequest VALUES (10,4,default,CURRENT_DATE());
 INSERT INTO friendRequest VALUES (11,9,default,CURRENT_DATE());
 INSERT INTO friendRequest VALUES (4,7,default,CURRENT_DATE());
-
-
+INSERT INTO friendRequest VALUES (9,7,default,null);
+INSERT INTO friendRequest (senderID,receiverID,state) VALUES (9,11,default);
 SELECT distinct ID,email,name,state FROM user left join friendRequest On  (senderID = ID  OR receiverID = ID) where  ID != 2;
 
 SELECT user.ID , user.name ,  email ,CASE WHEN state IS NULL THEN 'NOT FRIEND' Else state END AS State FROM user

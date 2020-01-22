@@ -333,5 +333,29 @@ public class UserDB {
 			}
 					
 				}
+
+	public static void sendRequest(int userID, int friendID) {
+		
+		String query = "INSERT INTO friendRequest (senderID , receiverID , state)VALUES ( " + userID + " , " + friendID + " ,  DEFAULT)";
+		DBAccess access = DBUtil.getDBAccess(query, DBUtil.QueryType.MODIFY);
+		DBUtil.freeDBAccess(access);
+	}
+
+	public static void acceptRequest(int userID , int friendID) {
+		
+		String query = "UPDATE  friendRequest SET state = 'ACCEPTED' WHERE senderID = " + friendID + " AND receiverID = " + userID ;
+		DBAccess access = DBUtil.getDBAccess(query, DBUtil.QueryType.MODIFY);
+		DBUtil.freeDBAccess(access);
+		
+	}
+	
+	public static void removeFriendship(int userID, int friendID) {
+		
+		String query = "DELETE FROM friendRequest WHERE ( senderID = " + friendID + " AND receiverID = " + userID + " )" 
+							  + " OR  ( senderID = " + userID + " AND receiverID = " + friendID + "  )";
+		DBAccess access = DBUtil.getDBAccess(query, DBUtil.QueryType.MODIFY);
+		DBUtil.freeDBAccess(access);
+		
+	}
 	
 }

@@ -185,6 +185,22 @@ public class UserService {
 		
 		UserDB.getSentRequests(ID,sentRequests);
 	}
+
+	public static void addFriend(int userID, int friendID) {
+		
+		UserDB.sendRequest(userID,friendID);
+	}
+
+	public static void acceptFriend(int userID, int friendID) {
+		
+		UserDB.acceptRequest(userID, friendID);
+		
+	}
+	public static void removeFriend(int userID, int friendID) {
+		
+		UserDB.removeFriendship(userID,friendID);
+		
+	}
 	
 
 }
