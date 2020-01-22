@@ -14,6 +14,7 @@ public class User {
 	private String phone;
 	private boolean male;
 	private List<User> friends;
+	private List<Post> posts;
 	
 	private User() {
 		super();
@@ -182,4 +183,11 @@ public class User {
 		return this.friends;
 	}
 
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
+	}
+	
+	public List<Post> getPosts() {
+		return this.posts;
+	}
 }

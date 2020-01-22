@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=windows-1256"
     pageEncoding="windows-1256"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="windows-1256">
+<link rel="stylesheet" type="text/css" href="style/global.css">
 <title>Home</title>
 </head>
 <body>
@@ -21,6 +23,28 @@
 			<input type="submit" value="Publish"/>
 		</form>
 		<p class="errorMSG">${errorMSG}</p>
+	</div>
+	<a href="posts?action=refresh"><button class="greenBG">Refresh</button></a>
+	<div class = "Your Wall">
+		<c:choose>
+			<c:when test="${wallPosts == null || fn:length(wallPosts) == 0} ">
+				<p>There Are No Posts To Show</p>
+			</c:when>
+			<c:otherwise>
+				<c:forEach var="post" items="${wallPosts}">
+					<hr size="5" />
+					<div class="post">
+						<h5>"${post.ownerName}"</h5>
+						<p>create : ${post.createdDate}</p>
+						<p>"${post.content}"</p>
+						<c:if test="${user.ID == post.ownerID}">
+							<a href="posts?action=delete&postID=${post.ID}"><button class="redBG">Delete</button></a>
+							<a  href="posts?action=edit&postID=${post.ID}"><button class="yellowBG">Edit</button></a>
+						</c:if>
+					</div>
+				</c:forEach>
+			</c:otherwise>
+		</c:choose>
 	</div>
 </body>
 </html>

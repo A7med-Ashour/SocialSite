@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -12,7 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.Post;
 import model.User;
+import service.PostService;
 import service.UserService;
 
 
@@ -90,12 +93,15 @@ public class UserController extends HttpServlet {
 			user = UserService.getUser(email);
 			if(UserService.isVerified(user)) {
 				URL =  "/home.jsp";
+				
+				List<Post> wallPosts = PostService.getWallPostsByID(user.getID());
 				HttpSession session = request.getSession();
 				session.setMaxInactiveInterval(-1);
 				/* THIS PART TO MAKE SESSION THREAD SAFE  IF USER USE MULTI TABS*/
 				final String sessionID = session.getId().intern(); /* String Constants Pool Object */
 				synchronized(sessionID) {
 					session.setAttribute("user", user);
+					session.setAttribute("wallPosts", wallPosts);
 				}
 				
 				/* IF USER WANTS TO REMEMBER HIM */
