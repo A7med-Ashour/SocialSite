@@ -27,6 +27,16 @@
   </servlet-mapping>
   
   
+   <servlet>
+  	<servlet-name>PostController</servlet-name>
+  	<servlet-class>controller.PostController</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>PostController</servlet-name>
+  	<url-pattern>/posts</url-pattern>
+  </servlet-mapping>
+  
    <filter>
   	<filter-name>AuthenticationFilter</filter-name>
   	<filter-class>filter.AuthenticationFilter</filter-class>
