@@ -24,7 +24,7 @@
 				<td>${friend.name} </td>
 				<td>${friend.email}</td>
 				<td>${friend.phone}</td>
-				<td><a href="friendship?action=remove,id=${friend.ID}" ><button class="redBG">unFriend</button></a></td>
+				<td><a href="friendship?action=remove&id=${friend.ID}" ><button class="redBG">unFriend</button></a></td>
 			</tr>
 		</c:forEach>
 	</table>
@@ -46,7 +46,10 @@
 				<tr>
 					<td>Name : ${sender.name} </td>
 					<td>Email : ${sender.email} </td>
-					<td><a href="friendship?action=remove,id=${sender.ID}" ><button class="redBG">Refuse</button></a></td>
+					<td>
+					<a href="friendship?action=accept&id=${sender.ID}" ><button class="blueBG">Accept</button></a>
+					<a href="friendship?action=remove&id=${sender.ID}" ><button class="yellowBG">Refuse</button></a>
+					</td>
 				</tr>
 			</c:forEach>
 		</table>
@@ -69,7 +72,7 @@
 				<tr>
 					<td>Name : ${receiver.name}</td>
 					<td>Email : ${receiver.email}</td>
-					<td><a href="friendship?action=remove,id=${receiver.ID}" ><button class="redBG">UnRequest</button></a></td>
+					<td><a href="friendship?action=remove&id=${receiver.ID}" ><button class="redBG">UnRequest</button></a></td>
 				</tr>
 			</c:forEach>
 		</table>
