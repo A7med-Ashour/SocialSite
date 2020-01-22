@@ -37,17 +37,17 @@
 						<td>
 							<c:choose>
 								<c:when  test="${searchResultState[result.ID] == 'ACCEPTED'}">
-									<a href="friendship?action=remove,id=${result.ID}" ><button class="redBG">unFriend</button></a>
+									<a href="friendship?action=remove&id=${result.ID}" ><button class="redBG">unFriend</button></a>
 								</c:when>
 								<c:when test="${searchResultState[result.ID] == 'PENDING'}">
-									<a href="friendship?action=removeReq,id=${result.ID}" ><button class="yellowBG">UnRequest</button></a>
+									<a href="friendship?action=remove&id=${result.ID}" ><button class="yellowBG">UnRequest</button></a>
 								</c:when>
 								<c:when test="${searchResultState[result.ID] == 'REPLY'}">
-									<a href="friendship?action=accept,id=${result.ID}" ><button class="blueBG">Accept</button></a>
-									<a href="friendship?action=remove,id=${result.ID}" ><button class="redBG">Refuse</button></a>
+									<a href="friendship?action=accept&id=${result.ID}" ><button class="blueBG">Accept</button></a>
+									<a href="friendship?action=remove&id=${result.ID}" ><button class="redBG">Refuse</button></a>
 								</c:when>
 								<c:otherwise>
-									<a href="friendship?action=add,id=${result.ID}" ><button class="greenBG">ADD Friend</button></a>
+									<a href="friendship?action=add&id=${result.ID}" ><button class="greenBG">ADD Friend</button></a>
 								</c:otherwise>
 							</c:choose>
 						</td>

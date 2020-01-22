@@ -37,9 +37,9 @@
   	<url-pattern>/home.jsp</url-pattern>
   	<url-pattern>/profile.jsp</url-pattern>
   	<url-pattern>/tempMessage.jsp</url-pattern>
-  	<url-pattern>/verify.jsp</url-pattern>
   	<url-pattern>/friends.jsp</url-pattern>
   	<url-pattern>/searchFriend.jsp</url-pattern>
+  	<url-pattern>/verify.jsp</url-pattern>
   	<dispatcher>REQUEST</dispatcher>
   	<dispatcher>FORWARD</dispatcher>
   </filter-mapping>

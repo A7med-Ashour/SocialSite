@@ -5,8 +5,9 @@
 <html>
 <head>
 <meta charset="windows-1256">
+<link rel="stylesheet" type="text/css" href="style/global.css">
+<link rel="stylesheet" type="text/css" href="style/register.css">
 <title>sign up</title>
-<link rel = "stylesheet" type = "text/css" href = "style/registerStyle.css" />
 </head>
 <body>
 	<h1> Enter your Information To Join </h1>
