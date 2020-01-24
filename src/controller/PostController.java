@@ -31,13 +31,14 @@ public class PostController extends HttpServlet {
 			userID = ((User)request.getSession().getAttribute("user")).getID();
 		}
 		
-	
+			
 			switch(action) {
 				case "create" : 
 					URL = createHandler(userID,request,response);
 					break;
-				case "refresh" :
-					URL = refreshHandler(userID,request,response);
+				case "delete":
+					URL = deleteHandler(userID,request,response);
+					break;
 				default :
 					/* Do Nothing */
 					break;
@@ -49,21 +50,25 @@ public class PostController extends HttpServlet {
 	}
 
 
-	private String refreshHandler(int userID, HttpServletRequest request, HttpServletResponse response) {
+	private String deleteHandler(int userID, HttpServletRequest request, HttpServletResponse response) {
 		
-		List<Post> wallPosts = PostService.getWallPostsByID(userID);
+		 int postID  = Integer.parseInt(request.getParameter("postID"));
+		
+		PostService.deletePost(userID,postID);
+		
 		final String sessionID = request.getSession().getId().intern();
 		synchronized(sessionID) {
-			request.getSession().setAttribute("wallPosts", wallPosts);
+			((User)request.getSession().getAttribute("user")).getPosts().removeIf( post -> post.getID() == postID );;
 		}
-		
-		return  "/social/home.jsp";
+	 
+		return "/social/home.jsp" ;
 	}
+
 
 
 	private String createHandler(int userID, HttpServletRequest request, HttpServletResponse response) {
 		
-		String URL = ( PostService.createPost(userID, request.getParameter("content")) ) ? "/social/profile.jsp" : null ;
+		String URL = ( PostService.createPost(userID, request.getParameter("content")) ) ? "/social/home.jsp" : null ;
 		
 		User user = null;
 		final String sessionID = request.getSession().getId().intern();
