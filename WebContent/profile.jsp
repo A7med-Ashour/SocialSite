@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="windows-1256">
+<link rel="stylesheet" type="text/css" href="style/global.css">
 <title>profile </title>
 </head>
 <body>
@@ -26,5 +27,19 @@
 	</c:choose>
 	<a href="logout?action=logout">LogOut</a>
 	
+	<div>
+		<h2>YOUR POSTS : </h2>
+		<div>
+			<c:forEach var="post" items="${user.posts}">
+			<hr size="5" />
+				<div class="post">
+					<h5>"${user.name}"</h5>
+					<p>create : ${post.createdDate}</p>
+					<p>"${post.content}"</p>
+					<a href="posts?action=delete&postID=${post.ID}"><button class="redBG">Delete</button></a>
+				</div>
+			</c:forEach>
+		</div>
+	</div>
 </body>
 </html>

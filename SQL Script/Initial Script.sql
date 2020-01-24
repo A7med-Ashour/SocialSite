@@ -58,14 +58,14 @@ CREATE TRIGGER friendRequest_createdDate_Trigger BEFORE INSERT ON friendRequest 
 CREATE TABLE post (
 	ID INT UNSIGNED NOT NULL AUTO_INCREMENT,
     content LONGTEXT NOT NULL,
-    created_date DATE NOT NULL,
+    created_date DATETIME NOT NULL,
     ownerID INT UNSIGNED NOT NULL,
     
     CONSTRAINT post_PK PRIMARY KEY (ID),
     CONSTRAINT post_user_FK FOREIGN KEY (ownerID) REFERENCES user (ID) ON DELETE CASCADE
 );
 
-CREATE TRIGGER post_createdDate_Trigger BEFORE INSERT ON post FOR EACH ROW SET NEW.created_date = CURRENT_DATE();
+CREATE TRIGGER post_createdDate_Trigger BEFORE INSERT ON post FOR EACH ROW SET NEW.created_date = NOW();
 
 -- TESTING COMMANDS
 drop table post;

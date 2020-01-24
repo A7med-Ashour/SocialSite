@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
+
+import data.PostDB;
 import data.UserDB;
 import help.Container;
 import help.Helper;
@@ -40,6 +42,8 @@ public class UserService {
 		
 		User user =  UserDB.findByEmail(Email);
 		user.setFriends(UserDB.getFriendsByID(user.getID()));
+		user.setPosts(PostDB.getPrivateByID(user.getID()));
+	
 		return user;
 	}
 
