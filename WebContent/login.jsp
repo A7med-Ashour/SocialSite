@@ -5,9 +5,10 @@
 <html>
 <head>
 <meta charset="windows-1256">
-<title>Insert title here</title>
+<title>Login </title>
 </head>
 <body>
+	
 	<form action="login" method="post">
 		<input type="hidden" name="action" value="login"/>
 		<input type="email" name="email" placeholder= "Email" value="${user.email}" required/>
@@ -18,5 +19,6 @@
 	</form>
 	<p>${errorMSG}</p>
 	<a href="register.jsp">create new account</a>
+	<a href="resetPassword.jsp">Forget Password</a>
 </body>
 </html>

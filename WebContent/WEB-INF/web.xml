@@ -5,13 +5,72 @@
   	<servlet-name>UserController</servlet-name>
   	<servlet-class>controller.UserController</servlet-class>
   </servlet>
+  
   <servlet-mapping>
   	<servlet-name>UserController</servlet-name>
   	<url-pattern>/login</url-pattern>
   	<url-pattern>/register</url-pattern>
   	<url-pattern>/verify</url-pattern>
+  	<url-pattern>/reset</url-pattern>
+  	<url-pattern>/logout</url-pattern>
   </servlet-mapping>
+  
+  
+   <servlet>
+  	<servlet-name>FriendshipController</servlet-name>
+  	<servlet-class>controller.FriendshipController</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>FriendshipController</servlet-name>
+  	<url-pattern>/friendship</url-pattern>
+  </servlet-mapping>
+  
+  
+   <servlet>
+  	<servlet-name>PostController</servlet-name>
+  	<servlet-class>controller.PostController</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>PostController</servlet-name>
+  	<url-pattern>/posts</url-pattern>
+  </servlet-mapping>
+  
+   <filter>
+  	<filter-name>AuthenticationFilter</filter-name>
+  	<filter-class>filter.AuthenticationFilter</filter-class>
+  </filter>
+  
+  <filter-mapping>
+  	<filter-name>AuthenticationFilter</filter-name>
+  	<url-pattern>/home.jsp</url-pattern>
+  	<url-pattern>/profile.jsp</url-pattern>
+  	<url-pattern>/tempMessage.jsp</url-pattern>
+  	<url-pattern>/friends.jsp</url-pattern>
+  	<url-pattern>/searchFriend.jsp</url-pattern>
+  	<url-pattern>/verify.jsp</url-pattern>
+  	<dispatcher>REQUEST</dispatcher>
+  	<dispatcher>FORWARD</dispatcher>
+  </filter-mapping>
+  
+   <filter>
+  	<filter-name>HomePageFilter</filter-name>
+  	<filter-class>filter.HomeRefreshFilter</filter-class>
+  </filter>
+  
+  <filter-mapping>
+  	<filter-name>HomePageFilter</filter-name>
+  	<url-pattern>/home.jsp</url-pattern>
+  	<dispatcher>REQUEST</dispatcher>
+  	<dispatcher>FORWARD</dispatcher>
+  </filter-mapping>
+  
   <welcome-file-list>
-    <welcome-file>login.jsp</welcome-file>
+    <welcome-file>home.jsp</welcome-file>
   </welcome-file-list>
+  
+  <session-config>
+  	<session-timeout>30</session-timeout>
+  </session-config>
 </web-app>

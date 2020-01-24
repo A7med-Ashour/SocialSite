@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.Date;
+import java.util.List;
 
 public class User {
 
@@ -12,6 +13,9 @@ public class User {
 	private Date DOB;
 	private String phone;
 	private boolean male;
+	private List<User> friends;
+	private List<Post> posts;
+	
 	private User() {
 		super();
 	}
@@ -171,9 +175,19 @@ public class User {
 		return salt;
 	}
 
+	public void setFriends(List<User> friends) {
+		this.friends = friends;
+	}
+	
+	public List<User> getFriends(){
+		return this.friends;
+	}
 
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
+	}
 	
-	
-	
-
+	public List<Post> getPosts() {
+		return this.posts;
+	}
 }
