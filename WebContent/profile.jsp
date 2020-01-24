@@ -37,7 +37,6 @@
 					<p>create : ${post.createdDate}</p>
 					<p>"${post.content}"</p>
 					<a href="posts?action=delete&postID=${post.ID}"><button class="redBG">Delete</button></a>
-					<a  href="posts?action=edit&postID=${post.ID}"><button class="yellowBG">Edit</button></a>
 				</div>
 			</c:forEach>
 		</div>

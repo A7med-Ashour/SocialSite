@@ -54,6 +54,18 @@
   	<dispatcher>FORWARD</dispatcher>
   </filter-mapping>
   
+   <filter>
+  	<filter-name>HomePageFilter</filter-name>
+  	<filter-class>filter.HomeRefreshFilter</filter-class>
+  </filter>
+  
+  <filter-mapping>
+  	<filter-name>HomePageFilter</filter-name>
+  	<url-pattern>/home.jsp</url-pattern>
+  	<dispatcher>REQUEST</dispatcher>
+  	<dispatcher>FORWARD</dispatcher>
+  </filter-mapping>
+  
   <welcome-file-list>
     <welcome-file>home.jsp</welcome-file>
   </welcome-file-list>

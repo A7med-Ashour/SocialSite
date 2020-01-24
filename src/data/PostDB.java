@@ -82,5 +82,13 @@ public class PostDB {
 		return results;
 	}
 
+	public static void delete(int ownerID, int postID) {
+		
+		String query = "DELETE FROM post WHERE ownerID = " + ownerID + " AND ID = " + postID;
+		DBAccess access = DBUtil.getDBAccess(query, DBUtil.QueryType.MODIFY);
+		DBUtil.freeDBAccess(access);
+		
+	}
+
 	
 }

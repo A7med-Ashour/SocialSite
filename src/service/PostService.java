@@ -21,4 +21,10 @@ public class PostService {
 		
 		return PostDB.getWallPostsByID(id);
 	}
+
+	public static void deletePost(int ownerID, int postID) {
+		
+		PostDB.delete(ownerID,postID);
+		
+	}
 }

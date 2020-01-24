@@ -24,7 +24,6 @@
 		</form>
 		<p class="errorMSG">${errorMSG}</p>
 	</div>
-	<a href="posts?action=refresh"><button class="greenBG">Refresh</button></a>
 	<div class = "Your Wall">
 		<c:choose>
 			<c:when test="${wallPosts == null || fn:length(wallPosts) == 0} ">
@@ -39,7 +38,6 @@
 						<p>"${post.content}"</p>
 						<c:if test="${user.ID == post.ownerID}">
 							<a href="posts?action=delete&postID=${post.ID}"><button class="redBG">Delete</button></a>
-							<a  href="posts?action=edit&postID=${post.ID}"><button class="yellowBG">Edit</button></a>
 						</c:if>
 					</div>
 				</c:forEach>
