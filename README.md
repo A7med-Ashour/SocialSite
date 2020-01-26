@@ -34,6 +34,6 @@ Non-Functional Features :
 - Authentication Filter So No One Can Access Resource Only If Already Login.
 
 Used Technologies :
-SERVLET - JSP - JDBC - JAVA MAIL API - MYSQL DATABASE - MVC Pattern - Builder Pattern - Regex - Java Reflection API.
+SERVLET - JSP - JSTL - EL - JDBC - JAVA MAIL API - Java Reflection API - MYSQL DATABASE - MVC Pattern - Builder Pattern - Regex.
 
 Tools : Eclipse IDE - MYSQL Workbench .
